@@ -97,3 +97,7 @@ func TestListOnePokemon(t *testing.T) {
 		require.JSONEq(t, string(esperado), string(recebido))
 	})
 }
+
+func TestAddPokemon() {
+
+}
