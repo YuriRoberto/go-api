@@ -98,6 +98,6 @@ func TestListOnePokemon(t *testing.T) {
 	})
 }
 
-func TestAddPokemon() {
+// func TestAddPokemon() {
 
-}
+// }
