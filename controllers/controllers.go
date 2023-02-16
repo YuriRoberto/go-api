@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -14,7 +13,7 @@ import (
 func AllPokemons(w http.ResponseWriter, r *http.Request) {
 	log.Info("Procurando todos pokemons..")
 	json.NewEncoder(w).Encode(models.Pokemons)
-	log.Debugf("Pokemons sendo retornados: %s", models.Pokemons)
+	log.Debugf("Pokemons sendo retornados: %+v", models.Pokemons)
 	log.Info("Todos os Pokemons foram retornados!")
 }
 
@@ -24,7 +23,7 @@ func ChosenPokemon(w http.ResponseWriter, r *http.Request) {
 	for _, pokemon := range models.Pokemons {
 		if strconv.Itoa(pokemon.Id) == id {
 			json.NewEncoder(w).Encode(pokemon)
-			log.Debugf("Pokemon sendo retornado: %s", pokemon)
+			log.Debugf("Pokemon sendo retornado: %+v", pokemon)
 			log.Info("O Pokemon foi retornado!")
 		}
 	}
@@ -36,7 +35,10 @@ func AddPokemon(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 	var pokemon models.Pokemon
 	decoder.Decode(&pokemon)
-	fmt.Println(pokemon)
+	json.NewEncoder(w).Encode(pokemon)
+	log.Debugf("O Pokemon sendo adicionado: %+v", pokemon)
+	log.Info("O Pokemon foi adicionado!")
+	// fmt.Println(w)
 
 	// req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
 	// if err != nil {
