@@ -61,7 +61,7 @@ func TestListPokemons(t *testing.T) {
 	})
 }
 func TestListOnePokemon(t *testing.T) {
-	t.Run("Retornar um pokemon", func(t *testing.T) {
+	t.Run("Listar um pokemon", func(t *testing.T) {
 		models.Pokemons = []models.Pokemon{
 			{
 				Id:      1,
@@ -101,7 +101,7 @@ func TestListOnePokemon(t *testing.T) {
 }
 
 func TestAddPokemon(t *testing.T) {
-	t.Run("Retornar um pokemon", func(t *testing.T) {
+	t.Run("Adicionar um pokemon", func(t *testing.T) {
 		payload := "{\"id\":4,\"tag\":\"#0004\",\"name\":\"Charmander\",\"img\":\"https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png\",\"details\":\"Pokemon do tipo fogo.\"}"
 		body := strings.NewReader(payload)
 		requisicao, err := http.NewRequest(http.MethodPost, "/api/pokemon", body)
@@ -112,10 +112,40 @@ func TestAddPokemon(t *testing.T) {
 		defer resposta.Result().Body.Close()
 		AddPokemon(resposta, requisicao)
 		recebido := resposta.Body.String()
-		fmt.Println(recebido)
 		esperado, err := json.Marshal(&models.Pokemon{
 			Id:      4,
 			Name:    "Charmander",
+			Tag:     "#0004",
+			Img:     "https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png",
+			Details: "Pokemon do tipo fogo.",
+		})
+		if err != nil {
+			t.Fatal("ERROR:", err)
+		}
+		require.JSONEq(t, string(esperado), string(recebido))
+	})
+}
+
+func TestEditPokemon(t *testing.T) {
+	t.Run("Editar um pokemon", func(t *testing.T) {
+		//TODO - Validar que nao tem nada
+		//TODO - Criar algum pokemon
+		//TODO - Criar mais um pokemon
+		//TODO - Editar um deles e valido q so e somente esse escolhido foi alterado
+		payload := "{\"id\":4,\"tag\":\"#0004\",\"name\":\"CharmanderNovooo\",\"img\":\"https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png\",\"details\":\"Pokemon do tipo fogo.\"}"
+		body := strings.NewReader(payload)
+		requisicao, err := http.NewRequest(http.MethodPost, "/api/pokemon/4", body)
+		if err != nil {
+			t.Fatal("ERROR:", err)
+		}
+		resposta := httptest.NewRecorder()
+		defer resposta.Result().Body.Close()
+		EditPokemon(resposta, requisicao)
+		recebido := resposta.Body.String()
+		fmt.Println(recebido)
+		esperado, err := json.Marshal(&models.Pokemon{
+			Id:      4,
+			Name:    "CharmanderNovooo",
 			Tag:     "#0004",
 			Img:     "https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png",
 			Details: "Pokemon do tipo fogo.",

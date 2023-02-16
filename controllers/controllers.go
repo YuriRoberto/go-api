@@ -31,7 +31,6 @@ func ChosenPokemon(w http.ResponseWriter, r *http.Request) {
 
 func AddPokemon(w http.ResponseWriter, r *http.Request) {
 	log.Info("Adicionando pokemon...")
-
 	decoder := json.NewDecoder(r.Body)
 	var pokemon models.Pokemon
 	decoder.Decode(&pokemon)
@@ -39,10 +38,14 @@ func AddPokemon(w http.ResponseWriter, r *http.Request) {
 	log.Debugf("O Pokemon sendo adicionado: %+v", pokemon)
 	log.Info("O Pokemon foi adicionado!")
 	// fmt.Println(w)
+}
 
-	// req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
-	// if err != nil {
-	// 	log.Error("Não foi possível adicionar, motivo: %s", err.Error())
-	// }
-
+func EditPokemon(w http.ResponseWriter, r *http.Request) {
+	log.Info("Editando pokemon...")
+	decoder := json.NewDecoder(r.Body)
+	var pokemon models.Pokemon
+	decoder.Decode(&pokemon)
+	json.NewEncoder(w).Encode(pokemon)
+	log.Debugf("O Pokemon sendo editado: %+v", pokemon)
+	log.Info("O Pokemon foi editado!")
 }
