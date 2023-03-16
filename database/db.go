@@ -18,10 +18,4 @@ func ConnectDataBase() {
 	if err != nil {
 		log.Panic("Error in connection with DataBase")
 	}
-	// pokemons := models.Pokemons
-	// result := DB.Find(&pokemons)
-	// if result.Error != nil {
-	// 	log.Panic("Error in find all pokemons")
-	// }
-	// fmt.Println(result.RowsAffected)
 }
