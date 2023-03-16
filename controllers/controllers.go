@@ -6,13 +6,20 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/YuriRoberto/go-api/database"
 	"github.com/YuriRoberto/go-api/models"
 	log "github.com/sirupsen/logrus"
 )
 
 func AllPokemons(w http.ResponseWriter, r *http.Request) {
 	log.Info("Procurando todos pokemons..")
-	json.NewEncoder(w).Encode(models.Pokemons)
+	allPokemons := models.Pokemons
+	result := database.DB.Find(&allPokemons)
+	if result.Error != nil {
+		log.Panic("Error in find all pokemons")
+	}
+
+	json.NewEncoder(w).Encode(allPokemons)
 	log.Debugf("Pokemons sendo retornados: %+v", models.Pokemons)
 	log.Info("Todos os Pokemons foram retornados!")
 }

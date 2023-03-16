@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 
+	"github.com/YuriRoberto/go-api/database"
 	"github.com/YuriRoberto/go-api/models"
 	"github.com/YuriRoberto/go-api/routes"
 	log "github.com/sirupsen/logrus"
@@ -39,6 +40,8 @@ func main() {
 			Details: "Pokemon do tipo fogo.",
 		},
 	}
+
+	database.ConnectDataBase()
 
 	log.Debug("Pokemons mockados")
 	routes.HandleRequest()
