@@ -4,7 +4,6 @@ import (
 	"os"
 
 	"github.com/YuriRoberto/go-api/database"
-	"github.com/YuriRoberto/go-api/models"
 	"github.com/YuriRoberto/go-api/routes"
 	log "github.com/sirupsen/logrus"
 )
@@ -24,22 +23,6 @@ func main() {
 		log.SetLevel(log.DebugLevel)
 	}
 	log.Info("Iniciando API...")
-	models.Pokemons = []models.Pokemon{
-		{
-			Id:      1,
-			Name:    "Bulbasaur",
-			Tag:     "#0001",
-			Img:     "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png",
-			Details: "Pokemon do tipo planta.",
-		},
-		{
-			Id:      4,
-			Name:    "Charmander",
-			Tag:     "#0004",
-			Img:     "https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png",
-			Details: "Pokemon do tipo fogo.",
-		},
-	}
 
 	database.ConnectDataBase()
 

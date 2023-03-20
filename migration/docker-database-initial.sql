@@ -8,3 +8,4 @@ create table pokemons(
 
 INSERT INTO pokemons(name, tag, details, img) VALUES
 ('Bulbasaur', '#001', 'Este animal tem uma planta nas costas e a usa para se defender', 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png');
+('Charmander', '#0004', 'Esse animal tem uma chama na cauda que quando irritado, mais forte fica a chama.', 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png');
