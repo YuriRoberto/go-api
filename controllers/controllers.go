@@ -3,7 +3,6 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 	"strings"
 
 	"github.com/YuriRoberto/go-api/database"
@@ -21,19 +20,28 @@ func AllPokemons(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(allPokemons)
 	log.Debugf("Pokemons sendo retornados: %+v", models.Pokemons)
-	log.Info("Todos os Pokemons foram retornados!")
+	log.Info("All pokemons are returned!")
 }
 
 func ChosenPokemon(w http.ResponseWriter, r *http.Request) {
-	log.Info("Procurando pokemon específico...")
+	log.Info("Search pokemon...")
 	id := strings.Split(r.URL.Path, "/")[3]
-	for _, pokemon := range models.Pokemons {
-		if strconv.Itoa(pokemon.Id) == id {
-			json.NewEncoder(w).Encode(pokemon)
-			log.Debugf("Pokemon sendo retornado: %+v", pokemon)
-			log.Info("O Pokemon foi retornado!")
-		}
+
+	pokemon := models.Pokemons
+	result := database.DB.First(&pokemon, id)
+	if result.Error != nil {
+		log.Panic("Error in find a pokemon")
 	}
+
+	json.NewEncoder(w).Encode(pokemon)
+	log.Info("The pokemon is returned!")
+	// for _, pokemon := range models.Pokemons {
+	// 	if strconv.Itoa(pokemon.Id) == id {
+	// 		json.NewEncoder(w).Encode(pokemon)
+	// 		log.Debugf("Pokemon sendo retornado: %+v", pokemon)
+	// 		log.Info("The pokemon is returned!")
+	// 	}
+	// }
 }
 
 func AddPokemon(w http.ResponseWriter, r *http.Request) {

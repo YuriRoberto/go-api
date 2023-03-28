@@ -14,6 +14,8 @@ import (
 //TODO - Criar banco de dados com docker
 //TODO - Subir api no docker(rodar testes no docker)
 //TODO - Alimentar a api com o banco de dados do docker
+//TODO - Fazer tds os endpoints funcionarem
+//TODO - Refatorar todos os testes
 func main() {
 	level := os.Getenv("LOG_LEVEL")
 	if level == "fatal" {
@@ -22,7 +24,7 @@ func main() {
 	if level == "debug" {
 		log.SetLevel(log.DebugLevel)
 	}
-	log.Info("Iniciando API...")
+	log.Info("Starting API...")
 
 	database.ConnectDataBase()
 

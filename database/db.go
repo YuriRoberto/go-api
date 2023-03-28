@@ -1,10 +1,10 @@
 package database
 
 import (
-	"log"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	log "github.com/sirupsen/logrus"
 )
 
 var (
@@ -18,4 +18,5 @@ func ConnectDataBase() {
 	if err != nil {
 		log.Panic("Error in connection with DataBase")
 	}
+	log.Info("Conecction with database begin...")
 }

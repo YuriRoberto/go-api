@@ -9,7 +9,7 @@ import (
 )
 
 func HandleRequest() {
-	log.Info("Carregando rotas...")
+	log.Info("Loading routes...")
 	r := mux.NewRouter()
 	r.HandleFunc("/api/pokemons", controllers.AllPokemons).Methods("GET")
 	r.HandleFunc("/api/pokemons/{id}/", controllers.ChosenPokemon).Methods("GET")
