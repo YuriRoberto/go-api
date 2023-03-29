@@ -11,7 +11,7 @@ import (
 )
 
 func AllPokemons(w http.ResponseWriter, r *http.Request) {
-	log.Info("Procurando todos pokemons..")
+	log.Info("Search all pokemons...")
 	allPokemons := models.Pokemons
 	result := database.DB.Find(&allPokemons)
 	if result.Error != nil {
@@ -26,13 +26,11 @@ func AllPokemons(w http.ResponseWriter, r *http.Request) {
 func ChosenPokemon(w http.ResponseWriter, r *http.Request) {
 	log.Info("Search pokemon...")
 	id := strings.Split(r.URL.Path, "/")[3]
-
 	pokemon := models.Pokemons
 	result := database.DB.First(&pokemon, id)
 	if result.Error != nil {
 		log.Panic("Error in find a pokemon")
 	}
-
 	json.NewEncoder(w).Encode(pokemon)
 	log.Info("The pokemon is returned!")
 	// for _, pokemon := range models.Pokemons {
@@ -45,22 +43,29 @@ func ChosenPokemon(w http.ResponseWriter, r *http.Request) {
 }
 
 func AddPokemon(w http.ResponseWriter, r *http.Request) {
-	log.Info("Adicionando pokemon...")
-	decoder := json.NewDecoder(r.Body)
+	log.Info("Adding pokemon...")
 	var pokemon models.Pokemon
-	decoder.Decode(&pokemon)
+	json.NewDecoder(r.Body).Decode(&pokemon)
+	log.Info("pokemon to be added: %+v", pokemon)
+	result := database.DB.Create(&pokemon)
+	if result.Error != nil {
+		log.Panic("Error in attempt to add a pokemon")
+	}
 	json.NewEncoder(w).Encode(pokemon)
-	log.Debugf("O Pokemon sendo adicionado: %+v", pokemon)
-	log.Info("O Pokemon foi adicionado!")
-	// fmt.Println(w)
+	log.Debugf("The Pokemon: %+v", pokemon)
+	log.Info("Pokemon has been added!")
 }
 
 func EditPokemon(w http.ResponseWriter, r *http.Request) {
-	log.Info("Editando pokemon...")
-	decoder := json.NewDecoder(r.Body)
+	log.Info("Editing pokemon...")
 	var pokemon models.Pokemon
-	decoder.Decode(&pokemon)
+	json.NewDecoder(r.Body).Decode(&pokemon)
+	log.Info("pokemon to be edited: %+v", pokemon)
+	result := database.DB.Save(&pokemon)
+	if result.Error != nil {
+		log.Panic("Error in attempt to edit a pokemon")
+	}
 	json.NewEncoder(w).Encode(pokemon)
-	log.Debugf("O Pokemon sendo editado: %+v", pokemon)
-	log.Info("O Pokemon foi editado!")
+	log.Debugf("The Pokemon: %+v", pokemon)
+	log.Info("Pokemons been edited!")
 }
