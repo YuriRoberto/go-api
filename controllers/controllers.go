@@ -12,12 +12,12 @@ import (
 
 func AllPokemons(w http.ResponseWriter, r *http.Request) {
 	log.Info("Search all pokemons...")
-	allPokemons := models.Pokemons
+	var allPokemons []models.Pokemon
 	result := database.DB.Find(&allPokemons)
 	if result.Error != nil {
+		log.Info("entrou no if de error")
 		log.Panic("Error in find all pokemons")
 	}
-
 	json.NewEncoder(w).Encode(allPokemons)
 	log.Debugf("Pokemons sendo retornados: %+v", models.Pokemons)
 	log.Info("All pokemons are returned!")
@@ -46,7 +46,7 @@ func AddPokemon(w http.ResponseWriter, r *http.Request) {
 	log.Info("Adding pokemon...")
 	var pokemon models.Pokemon
 	json.NewDecoder(r.Body).Decode(&pokemon)
-	log.Info("pokemon to be added: %+v", pokemon)
+	log.Infof("pokemon to be added: %+v", pokemon)
 	result := database.DB.Create(&pokemon)
 	if result.Error != nil {
 		log.Panic("Error in attempt to add a pokemon")
@@ -60,7 +60,7 @@ func EditPokemon(w http.ResponseWriter, r *http.Request) {
 	log.Info("Editing pokemon...")
 	var pokemon models.Pokemon
 	json.NewDecoder(r.Body).Decode(&pokemon)
-	log.Info("pokemon to be edited: %+v", pokemon)
+	log.Infof("pokemon to be edited: %+v", pokemon)
 	result := database.DB.Save(&pokemon)
 	if result.Error != nil {
 		log.Panic("Error in attempt to edit a pokemon")

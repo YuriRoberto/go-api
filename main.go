@@ -26,7 +26,8 @@ func main() {
 	}
 	log.Info("Starting API...")
 
-	database.ConnectDataBase()
+	database.ConnectDatabase()
+	
 
 	log.Debug("Pokemons mockados")
 	routes.HandleRequest()
