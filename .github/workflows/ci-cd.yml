@@ -26,7 +26,7 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: password
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
-        volumes: -- cd.. ./migration/docker-database-initial.sql:/docker-entrypoint-initdb.d/docker-database-initial.sql
+        # volumes: -- cd.. ./migration/docker-database-initial.sql:/docker-entrypoint-initdb.d/docker-database-initial.sql
     steps:
     - name: Verify MySQL connection from container 
       run: |
